@@ -35,8 +35,8 @@ th.down {
   background-position: center right;
 }
 .dropdown-list {
-  max-height:100px;
-  overflow:scroll; 
+  max-height: 100px;
+  overflow: scroll;
 }
 
 .footer-heart {
@@ -67,4 +67,11 @@ th.down {
 
 .emoji {
   vertical-align: middle;
+}
+.form-center {
+  display: flex;
+  justify-content: center;
+}
+#SearchForm input[type="search"] {
+  width: auto !important;
 }

@@ -10,8 +10,42 @@ const Table = () => {
   }, []);
 
   const [data, setData] = useState([]);
+  const [inputData, setInputData] = useState([{}]);
   const [username, setUsername] = useState([]);
-
+  const [usernameInput, setUsernameInput] = useState("");
+  //Update table data to username search by users
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log("username", usernameInput);
+    {
+      inputData.map(async (item, i) => {
+        let api_data = await getUsers(usernameInput);
+        console.log("api", api_data);
+        item.name = api_data[0];
+        item.url = api_data[1];
+        item.followers = api_data[2];
+        item.public_repos = api_data[3];
+        item.fieldA = "valueA";
+        item.fieldB = "valueB";
+        item.fieldC = "valueC";
+        item.fieldD = "valueD";
+        item.fieldE = "valueE";
+        item.fieldF = "valueF";
+        item.fieldG = "valueG";
+        item.fieldH = "valueH";
+        item.fieldI = "valueI";
+        item.fieldJ = "valueJ";
+        item.fieldK = "valueK";
+        item.fieldL = "valueL";
+        item.fieldM = "valueM";
+        item.fieldN = "valueN";
+        setInputData([inputData]);
+      });
+      setTableData(inputData);
+    }
+    console.log(inputData);
+  };
+  //Fetch data from local json file and display when user didn't search username
   {
     userData.map((item, i) => {
       let username = item.github.split("/")[3]; //To get username from url (local json)
@@ -48,23 +82,27 @@ const Table = () => {
   }
   const getUsers = async (item) => {
     const response = await fetch(`https://api.github.com/users/${item}`);
+    if (response.status >= 400) {
+      alert("Please Enter Valid Username"); //error when user enter wrong username
+    }
     const FinalData = await response.json();
+    let name = await FinalData.name;
+    let url = await FinalData.html_url;
     let followers = await FinalData.followers;
     let public_repos = await FinalData.public_repos;
-    return [followers, public_repos];
+    return [name, url, followers, public_repos];
   };
 
   {
     data.map(async (item, i) => {
       let api_data = await getUsers(username[i]);
-      item.followers = api_data[0];
-      item.public_repos = api_data[1];
+      item.name = api_data[0];
+      item.url = api_data[1];
+      item.followers = api_data[2];
+      item.public_repos = api_data[3];
       setData([...data]);
     });
   }
-  const data2 = [...data].sort((a, b) =>
-    a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
-  );
 
   const [tableData, setTableData] = useState(data);
 
@@ -101,6 +139,28 @@ const Table = () => {
   };
   return (
     <>
+      <div class="form-center">
+        <form
+          className="d-flex"
+          role="search"
+          onSubmit={handleSubmit}
+          id="SearchForm"
+          ali
+        >
+          <input
+            className="form-control me-2"
+            type="search"
+            placeholder="Enter Github Username"
+            aria-label="Search"
+            id="usernameInput"
+            onChange={(event) => setUsernameInput(event.target.value)}
+            required
+          />
+          <button className="btn btn-outline-success" type="submit">
+            Search
+          </button>
+        </form>
+      </div>
       <table className="table table-striped">
         {/* <caption>GitHub Dashboard</caption> */}
         <TableHead columns={columns} handleSorting={handleSorting} />
