@@ -82,7 +82,7 @@ const Table = () => {
   }
   const getUsers = async (item) => {
     const response = await fetch(`https://api.github.com/users/${item}`);
-    if (response.status >= 400) {
+    if (response.status === 404) {
       alert("Please Enter Valid Username"); //error when user enter wrong username
     }
     const FinalData = await response.json();
