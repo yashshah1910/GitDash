@@ -75,3 +75,13 @@ th.down {
 #SearchForm input[type="search"] {
   width: auto !important;
 }
+th {
+  background: white;
+  position: sticky;
+  top: 0;
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+}
+.fixTableHead {
+  overflow-y: auto;
+  height: 420px;
+}

@@ -161,11 +161,13 @@ const Table = () => {
           </button>
         </form>
       </div>
-      <table className="table table-striped">
-        {/* <caption>GitHub Dashboard</caption> */}
-        <TableHead columns={columns} handleSorting={handleSorting} />
-        <TableBody columns={columns} tableData={tableData} />
-      </table>
+      <div class="fixTableHead">
+        <table className="table table-striped">
+          {/* <caption>GitHub Dashboard</caption> */}
+          <TableHead columns={columns} handleSorting={handleSorting} />
+          <TableBody columns={columns} tableData={tableData} />
+        </table>
+      </div>
     </>
   );
 };
